@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madlibs Exercise</title>
+</head>
+
+<body>
+    <h1>Madlibs Exercise</h1>
+    <form action="/story">
+        {% for prompt in questions %}
+        <p>{{ prompt }}:
+            <input name="{{ prompt }}">
+        </p>
+        {% endfor %}
+        <button>Submit</button>
+    </form>
+</body>
+
+</html>
