@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block pagetitle %} Surveys Exercise {% endblock %}\
+
+{% block responses %}
+<form action="/surveys/satisfaction"><input type=submit value="satisfaction survey"></form>
+Results: {{results}} {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} Question {{question_number}} {% endblock %}
+
+{% block pagetitle %} Question {{question_number}} {% endblock %}
+
+{% block question_text %} {{question_text}} {% endblock %}
+
+{% block question_choices %}
+{% for choice in choices %}
+<input type="radio" id="{{choice}}" name="choice" value="{{choice}}">
+<label for="{{choice}}">{{choice}}</label><br>
+{% endfor %}
+<input type="submit">
+{% endblock %}
