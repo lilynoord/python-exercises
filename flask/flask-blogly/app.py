@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from __future__ import print_function  # In python 2.7
+import sys
+from flask import Flask, render_template, redirect
 from models import db, connect_db, User
 
 
@@ -16,4 +18,13 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return render_template("base.html")
+    return redirect(
+        "/users",
+    )
+
+
+@app.route("/users")
+def users_index():
+    users = User.query.order_by(User.last_name, User.first_name).all()
+
+    return render_template("users.html", users=users)
