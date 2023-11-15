@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{%block title%} Add User {%endblock%}
+
+{%block header%} Add User {%endblock%}
+
+{%block body%}
+<form action="/adduser/submit" method="post" name="add-user-form">
+    <p>First Name: <input name="first_name"></p>
+    <p>Last Name: <input name="last_name"></p>
+    <p>profile image: <input name="img_url"></p>
+    <input type="submit" ,value="Submit">
+</form>
+{%endblock%}

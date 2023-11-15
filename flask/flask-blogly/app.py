@@ -1,6 +1,4 @@
-from __future__ import print_function  # In python 2.7
-import sys
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from models import db, connect_db, User
 
 
@@ -28,3 +26,19 @@ def users_index():
     users = User.query.order_by(User.last_name, User.first_name).all()
 
     return render_template("users.html", users=users)
+
+
+@app.route("/adduser")
+def add_user_page():
+    return render_template("addUser.html")
+
+
+@app.route("/adduser/submit", methods=["POST"])
+def add_user_submit():
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    img_url = request.form["img_url"]
+
+    db.session.add(User(first_name=first_name, last_name=last_name, image_url=img_url))
+    db.session.commit()
+    return redirect("/users")
