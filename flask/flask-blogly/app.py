@@ -63,3 +63,18 @@ def new_post_submit(userId):
     )
     db.session.commit()
     return render_template("newPost.html")
+
+
+@app.route("/posts/<postId>")
+def get_post_by_id(postId):
+    post = Post.query.first(id=postId)
+    user = User.query.first(id=post.user_id)
+    return render_template(
+        "showPost.html",
+        postTitle=post.title,
+        postContent=post.content,
+        postDate=post.created_at,
+        firstName=user.first_name,
+        lastName=user.last_name,
+        pfp=user.image_url,
+    )
