@@ -11,6 +11,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///blogly"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "ihaveasecret"
 
+currentUser = None
 
 connect_db(app)
 with app.app_context():
@@ -31,6 +32,14 @@ def users_index():
     return render_template("users.html", users=users)
 
 
+@app.route("/users/profile/<userId>/<name>")
+def get_profile_page(userId, name):
+    user = User.query.get(int(userId))
+    global currentUser
+    currentUser = user
+    return render_template("profilePage.html", user=user)
+
+
 @app.route("/adduser")
 def add_user_page():
     print("adduser", file=sys.stderr)
@@ -46,6 +55,13 @@ def add_user_submit():
     db.session.add(User(first_name=first_name, last_name=last_name, image_url=img_url))
     db.session.commit()
     return redirect("/users")
+
+
+@app.route("/users/route-to-post")
+def route_to_post():
+    userId = currentUser.id
+    url = "/users/" + str(userId) + "/posts/new"
+    return redirect(url)
 
 
 @app.route("/users/<userId>/posts/new", methods=["GET"])
@@ -67,14 +83,6 @@ def new_post_submit(userId):
 
 @app.route("/posts/<postId>")
 def get_post_by_id(postId):
-    post = Post.query.first(id=postId)
-    user = User.query.first(id=post.user_id)
-    return render_template(
-        "showPost.html",
-        postTitle=post.title,
-        postContent=post.content,
-        postDate=post.created_at,
-        firstName=user.first_name,
-        lastName=user.last_name,
-        pfp=user.image_url,
-    )
+    post = Post.query.first(int(postId))
+    user = User.query.first(post.user_id)
+    return render_template("showPost.html", post=post, user=user)
