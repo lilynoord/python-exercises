@@ -1,7 +1,7 @@
 from __future__ import print_function  # In python 2.7
 import sys
 
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, flash
 from models import db, connect_db, User, Post
 from datetime import datetime
 
@@ -69,20 +69,32 @@ def new_post_page(userId):
     return render_template("newPost.html", userId=userId)
 
 
-@app.route("/users/<userId>/posts/new", methods=["POST"])
+@app.route("/users/<userId>/posts/new/submit", methods=["POST"])
 def new_post_submit(userId):
-    title = request.form("Title")
-    content = request.form("Content")
+    print("userId: " + userId, flush=True)
+    title = request.form["title"]
+    content = request.form["content"]
     created_at = datetime.now()
-    db.session.add(
-        Post(title=title, content=content, created_at=created_at, user_id=userId)
-    )
+    newPost = Post(title=title, content=content, created_at=created_at, user_id=userId)
+    db.session.add(newPost)
     db.session.commit()
-    return render_template("newPost.html")
+    return redirect("/posts/" + str(newPost.id))
 
 
 @app.route("/posts/<postId>")
 def get_post_by_id(postId):
-    post = Post.query.first(int(postId))
-    user = User.query.first(post.user_id)
+    print("postId: " + postId, file=sys.stdout)
+    post = Post.query.get(int(postId))
+    user = User.query.get(post.user_id)
     return render_template("showPost.html", post=post, user=user)
+
+
+@app.route("/posts/<postId>/edit")
+def edit_post_by_id(postId):
+    post = Post.query.first(int(postId))
+    postUser = User.query.first(post.user_id)
+    if currentUser == postUser:
+        return render_template("editPost.html")
+    else:
+        flash("Cannot edit post: incorrect user!")
+        return redirect("/posts/" + str(postId))

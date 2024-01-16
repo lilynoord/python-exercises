@@ -5,12 +5,13 @@
 {%block header%} Add Post {%endblock%}
 
 {%block body%}
-<form action="/users/{{userId}}/posts/new" method="post" name="new-post-form">
-    <p>Title <input name="Title"></p>
-    <p>Content<input name="Content"></p>
-    <form action="/users" ,method="get"><input type="submit" , value="Cancel"></form>
+<form action="/users/{{userId}}/posts/new/submit" method="post" name="new-post-form">
+    <p>Title <input name="title"></p>
+    <p>Content<input name="content"></p>
+
 
     <input type="submit" , value="Add">
 
 </form>
+<form action="/users" ,method="get"><input type="submit" , value="Cancel"></form>
 {%endblock%}
