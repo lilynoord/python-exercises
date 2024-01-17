@@ -1,0 +1,9 @@
+List of routes and associated templates. 
+
+
+
+Get /tags
+
+GET /tags/<tag-id>
+GET /tags/new
+POST /tags/new
