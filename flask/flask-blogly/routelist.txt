@@ -3,7 +3,12 @@ List of routes and associated templates.
 
 
 Get /tags
+> tagList.html
 
 GET /tags/<tag-id>
+> tagDetails.html
+
 GET /tags/new
+> newTag.html
 POST /tags/new
+>redir to home
