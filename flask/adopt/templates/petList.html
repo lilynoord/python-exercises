@@ -1,0 +1,38 @@
+{%extends 'base.html' %}
+
+{%block Title%} Home {%endblock%}
+{%block body%}
+
+<table class="pet-list">
+
+    <tbody class="pet-list">
+        {%for i in range(0,(pet|length),2)%}
+        <tr class="pet-list">
+            <td class="pet-list">
+                <img src={{pet[i].photo_url}}>
+                <h3 class="pet-name">
+                    {{pet[i].name}}
+                </h3>
+                {%if pet[i].available == True%}
+                <h3 class="pet-status available">Available!</h3>
+                {%else%}
+                <h3 class="pet-status not-available">Not Available</h3>
+                {%endif%}
+            </td>
+            <td class="pet-list">
+                <img src={{pet[i+1].photo_url}}>
+                <h3 class="pet-name">
+                    {{pet[i+1].name}}
+                </h3>
+                {%if pet[i+1].available == True%}
+                <h3 class="pet-status available">Available!</h3>
+                {%else%}
+                <h3 class="pet-status not-available">Not Available</h3>
+                {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+{%endblock%}
