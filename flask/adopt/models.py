@@ -11,7 +11,7 @@ class Pet(db.Model):
     photo_url = db.Column(
         db.Text,
         default="https://images.assetsdelivery.com/compings_v2/urfandadashov/urfandadashov1809/urfandadashov180901275.jpg",
-        nullable=False,
+        nullable=True,
     )
     age = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)

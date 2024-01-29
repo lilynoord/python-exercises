@@ -19,6 +19,7 @@
                 <h3 class="pet-status not-available">Not Available</h3>
                 {%endif%}
             </td>
+            {%if (pet|length) != i+1 %}
             <td class="pet-list">
                 <img src={{pet[i+1].photo_url}}>
                 <h3 class="pet-name">
@@ -30,6 +31,7 @@
                 <h3 class="pet-status not-available">Not Available</h3>
                 {%endif%}
             </td>
+            {%endif%}
         </tr>
         {%endfor%}
     </tbody>
